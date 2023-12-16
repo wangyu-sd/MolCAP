@@ -104,18 +104,19 @@ class IMLearner(pl.LightningModule):
             self.criterion = nn.CrossEntropyLoss()
 
         elif "finetune" in self.mode:
-            self.down_stream_encoder = Encoder(encoder_layer, n_downstream_layer, nn.LayerNorm(d_model))
-            #
-            # if self.mode in ['finetune_DDI', 'finetune_DDS']:
-            #     self.down_stream_decoder = Decoder(decoder_layer, 3, nn.LayerNorm(d_model))
-            # self.down_stream_out_fn = nn.Sequential(nn.Linear(nhead, num_tasks))
-            self.down_stream_out_fn = nn.Sequential(
-                # nn.Linear(d_model, d_model // 2),
-                # nn.GELU(),
-                nn.Dropout(self.dropout),
-                # nn.Dropout(self.dropout),
-                nn.Linear(d_model, num_tasks),
-            )
+            # self.down_stream_encoder = Encoder(encoder_layer, n_downstream_layer, nn.LayerNorm(d_model))
+            # #
+            # # if self.mode in ['finetune_DDI', 'finetune_DDS']:
+            # #     self.down_stream_decoder = Decoder(decoder_layer, 3, nn.LayerNorm(d_model))
+            # # self.down_stream_out_fn = nn.Sequential(nn.Linear(nhead, num_tasks))
+            # self.down_stream_out_fn = nn.Sequential(
+            #     # nn.Linear(d_model, d_model // 2),
+            #     # nn.GELU(),
+            #     nn.Dropout(self.dropout),
+            #     # nn.Dropout(self.dropout),
+            #     nn.Linear(d_model, num_tasks),
+            # )
+            pass
 
         elif "prompt" in self.mode:
             self.prompt_fn = MolGNNLayers(d_model, nhead, dropout, mode, num_tasks, num_layers=4)
